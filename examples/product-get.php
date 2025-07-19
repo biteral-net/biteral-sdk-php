@@ -12,4 +12,4 @@ $client = new Client($apiKey, $apiVersion, $apiBaseUrl);
 
 $product = $client->products()->getByCode('B00YUU43VS');
 
-var_dump($product);
+echo $product->data->title."\n";
