@@ -1,0 +1,38 @@
+{
+    "name": "biteral/biteral-sdk-php",
+    "version": "0.1.0",
+    "description": "Easily integrate Biteral AI tools into your e-commerce",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Biteral\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Biteral",
+            "email": "support@biteral.net",
+            "homepage": "https://biteral.net",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "support@biteral.net",
+        "issues": "https://github.com/biteral-net/biteral-sdk-php/issues",
+        "source": "https://github.com/biteral-net/biteral-sdk-php"
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.6.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7 || ^9.0"
+    },
+    "scripts": {
+        "test": "bash -c 'source .env && vendor/bin/phpunit'"
+    }
+}

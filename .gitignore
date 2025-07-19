@@ -1,0 +1,32 @@
+# Composer dependencies
+/vendor/
+
+# Composer lock file
+# /composer.lock
+
+# PHPUnit test results and coverage
+/phpunit.xml
+/phpunit.xml.dist.bak
+/.phpunit.result.cache
+/coverage/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+/.vscode/
+*.swp
+
+# Logs
+*.log
+
+# Build artifacts
+/build/
+/dist/
+
+# Temporary filess
+*.tmp
+*.cache
+
+# Env file
+.env

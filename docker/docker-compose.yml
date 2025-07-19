@@ -1,0 +1,10 @@
+  services:
+    biteral-sdk-php-test:
+      image: biteral-sdk-php-test
+      container_name: biteral-sdk-php-test
+      build:
+        context: .
+        dockerfile: ./Dockerfile
+      working_dir: /biteral-sdk-php
+      volumes:
+        - ../:/biteral-sdk-php

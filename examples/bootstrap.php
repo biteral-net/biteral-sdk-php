@@ -1,0 +1,5 @@
+<?php
+
+$apiKey = getenv('BITERAL_API_KEY') !== false ? getenv('BITERAL_API_KEY') : (isset($_ENV['BITERAL_API_KEY']) ? $_ENV['BITERAL_API_KEY'] : null);
+$apiBaseUrl = getenv('BITERAL_API_BASE_URL') !== false ? getenv('BITERAL_API_BASE_URL') : (isset($_ENV['BITERAL_API_BASE_URL']) ? $_ENV['BITERAL_API_BASE_URL'] : 'https://api.biteral.net');
+$apiVersion = getenv('BITERAL_API_VERSION') !== false ? getenv('BITERAL_API_VERSION') : (isset($_ENV['BITERAL_API_VERSION']) ? $_ENV['BITERAL_API_VERSION'] : '1');
