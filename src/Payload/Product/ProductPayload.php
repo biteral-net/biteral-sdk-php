@@ -1,10 +1,14 @@
 <?php
 
-namespace Biteral\Payload\Status;
+namespace Biteral\Payload\Product;
 
-use Biteral\Payload\Payload;
+use Biteral\Payload\PayloadInterface;
+use Biteral\Payload\Shared\PricePayload;
+use Biteral\Payload\Product\BrandPayload;
+use Biteral\Payload\Product\ProductCategoryPayload;
+use Biteral\Payload\Product\ProductAttributePayload;
 
-class ProductPayload extends Payload {
+class ProductPayload implements PayloadInterface {
     /**
      * @var string $code The product code as stored in your system.
      */
@@ -25,11 +29,47 @@ class ProductPayload extends Payload {
      */
     public $price;
 
-    public function __construct($object, $transformFromObject)
+    /**
+     * @var
+     */
+    public $attributes;
+
+    public function __construct(
+        $code,
+        $title,
+        $description,
+        $price,
+        $attributes,
+        $brand,
+        $category,
+        $imageUrl,
+        $metadata
+    )
     {
-        $this->code = $object->code;
-        $this->title = $object->title;
-        $this->description = $object->description;
-        $this->price = $object->price;
+        $this->code = $code;
+        $this->title = $title;
+        $this->description = $description;
+        $this->price = $price;
+        $this->attributes = $attributes;
+        $this->brand = $brand;
+        $this->category = $category;
+        $this->imageUrl = $imageUrl;
+        $this->metadata = $metadata;
+    }
+
+    public static function fromObject($object, $transformFromObject)
+    {
+        return
+            new ProductPayload(
+                $object->code,
+                $object->title,
+                $object->description,
+                $transformFromObject->payloadFromObject(PricePayload::class, $object->price),
+                $transformFromObject->payloadFromObject(ProductAttributePayload::class, $object->attributes),
+                $transformFromObject->payloadFromObject(BrandPayload::class, $object->brand),
+                $transformFromObject->payloadFromObject(ProductCategoryPayload::class, $object->brand),
+                $object->imageUrl,
+                $object->metadata
+            );
     }
 }

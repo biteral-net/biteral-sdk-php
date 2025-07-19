@@ -10,6 +10,7 @@ use Biteral\Exception\ConnectionException;
 use Biteral\Transform\TransformFromObject;
 use Biteral\Exception\ServerErrorException;
 use Biteral\Exception\UnauthorizedException;
+use Biteral\Exception\UnknownRequestException;
 use Biteral\Exception\TooManyRequestsException;
 use Biteral\Exception\ServiceUnavailableException;
 
@@ -35,9 +36,13 @@ abstract class Service {
         $this->transformFromObject = new TransformFromObject;
     }
 
-    protected function request($method, $endpoint, $body = null)
+    protected function request($method, $endpoint, $parameters = null, $body = null)
     {
-        $url = $this->baseUrl.'/'.$endpoint;
+        $url =
+            $this->baseUrl.
+            '/'.
+            $endpoint.
+            ($parameters ? '?'.http_build_query($parameters) : '');
 
         $options = [
             CURLOPT_RETURNTRANSFER => true,
@@ -46,6 +51,7 @@ abstract class Service {
                 'X-API-Version: '.$this->version,
                 'Accept: application/json',
             ],
+            CURLOPT_TIMEOUT => 10
         ];
 
         switch ($method) {
@@ -62,10 +68,6 @@ abstract class Service {
                     $options[CURLOPT_HTTPHEADER][] = 'Content-Type: application/json';
                 }
                 break;
-
-            case self::METHOD_GET:
-                $options[CURLOPT_HTTPGET] = true;
-                break;
         }
 
         $curlHandler = curl_init($url);
@@ -78,33 +80,36 @@ abstract class Service {
         }
 
         $statusCode = curl_getinfo($curlHandler, CURLINFO_HTTP_CODE);
+        $curlError = curl_error($curlHandler);
         curl_close($curlHandler);
 
         $response = $this->transformResponse($response);
+
+        $errorMessage = $response->data->code.($curlError ? ' / '.$curlError : '');
 
         switch ($statusCode) {
             case 200:
             case 201:
                 return $response;
             case 400:
-                throw new BadRequestException(curl_error($curlHandler));
+                throw new BadRequestException($errorMessage);
             case 401:
-                throw new UnauthorizedException(curl_error($curlHandler));
+                throw new UnauthorizedException($errorMessage);
             case 403:
-                throw new ForbiddenException(curl_error($curlHandler));
+                throw new ForbiddenException($errorMessage);
             case 404:
-                throw new NotFoundException(curl_error($curlHandler));
+                throw new NotFoundException($errorMessage);
             case 409:
-                throw new ConflictException(curl_error($curlHandler));
+                throw new ConflictException($errorMessage);
             case 429:
-                throw new TooManyRequestsException(curl_error($curlHandler));
+                throw new TooManyRequestsException($errorMessage);
             case 500:
-                throw new ServerErrorException(curl_error($curlHandler));
+                throw new ServerErrorException($errorMessage);
             case 503:
-                throw new ServiceUnavailableException(curl_error($curlHandler));
+                throw new ServiceUnavailableException($errorMessage);
+            default:
+                throw new UnknownRequestException('HTTP code '.$statusCode.': '.$errorMessage);
         }
-
-        return $response;
     }
 
     private function transformResponse($response)

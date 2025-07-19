@@ -2,6 +2,7 @@
 
 namespace Biteral\Transform;
 
+use Biteral\Entity\Error\Error;
 use Biteral\Entity\Status\Status;
 use Biteral\Entity\Product\Product;
 use Biteral\Entity\Status\ApiVersion;
@@ -17,6 +18,8 @@ class TransformFromObject
         }
 
         switch ($object->object) {
+            case 'error':
+                return Error::fromObject($object, $this);
             case 'status':
                 return Status::fromObject($object, $this);
             case 'product':
