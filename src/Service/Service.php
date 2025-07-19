@@ -19,6 +19,10 @@ abstract class Service {
     private $baseUrl;
     private $transformFromObject;
 
+    const METHOD_GET = 0;
+    const METHOD_POST = 1;
+    const METHOD_DELETE = 2;
+
     public function __construct(
         $apiKey,
         $version = null,
@@ -31,29 +35,50 @@ abstract class Service {
         $this->transformFromObject = new TransformFromObject;
     }
 
-    protected function request($endpoint)
+    protected function request($method, $endpoint, $body = null)
     {
         $url = $this->baseUrl.'/'.$endpoint;
 
-        $ch = curl_init($url);
-
-        curl_setopt_array($ch, [
+        $options = [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => [
                 'X-API-Key: '.$this->apiKey,
                 'X-API-Version: '.$this->version,
                 'Accept: application/json',
             ],
-        ]);
+        ];
 
-        $response = curl_exec($ch);
+        switch ($method) {
+            case self::METHOD_POST:
+                $options[CURLOPT_POST] = true;
+                $options[CURLOPT_POSTFIELDS] = $body ? json_encode($body) : '';
+                $options[CURLOPT_HTTPHEADER][] = 'Content-Type: application/json';
+                break;
 
-        if ($response === false) {
-            throw new ConnectionException(curl_error($ch));
+            case self::METHOD_DELETE:
+                $options[CURLOPT_CUSTOMREQUEST] = 'DELETE';
+                if (!empty($body)) {
+                    $options[CURLOPT_POSTFIELDS] = json_encode($body);
+                    $options[CURLOPT_HTTPHEADER][] = 'Content-Type: application/json';
+                }
+                break;
+
+            case self::METHOD_GET:
+                $options[CURLOPT_HTTPGET] = true;
+                break;
         }
 
-        $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        $curlHandler = curl_init($url);
+        curl_setopt_array($curlHandler, $options);
+
+        $response = curl_exec($curlHandler);
+
+        if ($response === false) {
+            throw new ConnectionException(curl_error($curlHandler));
+        }
+
+        $statusCode = curl_getinfo($curlHandler, CURLINFO_HTTP_CODE);
+        curl_close($curlHandler);
 
         $response = $this->transformResponse($response);
 
@@ -62,21 +87,21 @@ abstract class Service {
             case 201:
                 return $response;
             case 400:
-                throw new BadRequestException(curl_error($ch));
+                throw new BadRequestException(curl_error($curlHandler));
             case 401:
-                throw new UnauthorizedException(curl_error($ch));
+                throw new UnauthorizedException(curl_error($curlHandler));
             case 403:
-                throw new ForbiddenException(curl_error($ch));
+                throw new ForbiddenException(curl_error($curlHandler));
             case 404:
-                throw new NotFoundException(curl_error($ch));
+                throw new NotFoundException(curl_error($curlHandler));
             case 409:
-                throw new ConflictException(curl_error($ch));
+                throw new ConflictException(curl_error($curlHandler));
             case 429:
-                throw new TooManyRequestsException(curl_error($ch));
+                throw new TooManyRequestsException(curl_error($curlHandler));
             case 500:
-                throw new ServerErrorException(curl_error($ch));
+                throw new ServerErrorException(curl_error($curlHandler));
             case 503:
-                throw new ServiceUnavailableException(curl_error($ch));
+                throw new ServiceUnavailableException(curl_error($curlHandler));
         }
 
         return $response;

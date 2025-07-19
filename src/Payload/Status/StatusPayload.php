@@ -3,11 +3,10 @@
 namespace Biteral\Payload\Status;
 
 use DateTime;
-use Biteral\Payload\Payload;
 use Biteral\Entity\Status\ApiVersion;
-use Biteral\Payload\Status\ApiVersionPayload;
+use Biteral\Payload\PayloadInterface;
 
-class StatusPayload extends Payload {
+class StatusPayload implements PayloadInterface {
     /**
      * @var ApiVersion[] The API versions that are available on this server
      */
@@ -53,20 +52,45 @@ class StatusPayload extends Payload {
      */
     public $environment;
 
-    public function __construct($object, $transformFromObject)
+    public function __construct(
+        $availableApiVersions,
+        $latestStableMajorApiVersion,
+        $requestMajorApiVersion,
+        $clientId,
+        $projectId,
+        $roles,
+        $permissions,
+        $serverTime,
+        $environment
+    )
     {
-        $this->availableApiVersions = $transformFromObject->entityFromObject($object->availableApiVersions);
+        $this->availableApiVersions = $availableApiVersions;
+        $this->latestStableMajorApiVersion = $latestStableMajorApiVersion;
+        $this->requestMajorApiVersion = $requestMajorApiVersion;
+        $this->clientId = $clientId;
+        $this->projectId = $projectId;
+        $this->roles = $roles;
+        $this->permissions = $permissions;
+        $this->serverTime = $serverTime;
+        $this->environment = $environment;
+    }
 
-        $this->latestStableMajorApiVersion = $object->latestStableMajorApiVersion;
-        $this->requestMajorApiVersion = $object->requestMajorApiVersion;
-        $this->clientId = $object->clientId;
-        $this->projectId = $object->projectId;
-        $this->roles = $object->roles;
-        $this->permissions = $object->permissions;
-
+    public static function fromObject($object, $transformFromObject)
+    {
         $serverTime = new DateTime($object->serverTime, new \DateTimeZone('UTC'));
-        $this->serverTime = $serverTime->getTimestamp();
+        $serverTime = $serverTime->getTimestamp();
 
-        $this->environment = $object->environment;
+        return
+            new StatusPayload(
+                $transformFromObject->entityFromObject($object->availableApiVersions),
+                $object->latestStableMajorApiVersion,
+                $object->requestMajorApiVersion,
+                $object->clientId,
+                $object->projectId,
+                $object->roles,
+                $object->permissions,
+                $serverTime,
+                $object->environment
+            );
     }
 }

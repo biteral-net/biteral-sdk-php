@@ -2,13 +2,21 @@
 
 namespace Biteral\Entity\Product;
 
-use Biteral\Entity\Entity;
+use Biteral\Entity\EntityInterface;
 
-class Product extends Entity {
+class Product implements EntityInterface {
     public $data;
 
-    public function __construct($object, $transformFromObject)
+    public function __construct($data)
     {
-        $this->data = $object->data;
+        $this->data = $data;
+    }
+
+    public static function fromObject($object, $transformFromObject)
+    {
+        return
+            new Product(
+                $transformFromObject->payloadFromObject(Product::class, $object->data)
+            );
     }
 }

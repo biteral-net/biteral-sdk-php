@@ -1,10 +1,12 @@
 <?php
 
-include __DIR__.'/../examples/bootstrap.php'; // Don't use this in your code, it's here just to make runing examples easier
+/**
+ * An example on how to get Biteral's API status and some information about your request using the /status endpoint
+ */
+
+require __DIR__.'/../examples/bootstrap.php'; // Don't use this in your code, it's here just to make runing examples easier
 
 use Biteral\Client;
-
-require __DIR__.'/../vendor/autoload.php';
 
 $client = new Client($apiKey, $apiVersion, $apiBaseUrl);
 

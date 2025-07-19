@@ -3,6 +3,7 @@
 namespace Biteral;
 
 use Biteral\Service\StatusService;
+use Biteral\Service\ProductsService;
 
 /**
  * The main entrypoint to start using the SDK
@@ -35,5 +36,13 @@ class Client
     public function status()
     {
         return new StatusService($this->apiKey, $this->version, $this->baseUrl);
+    }
+
+    /**
+     * @return ProductsService
+     */
+    public function products()
+    {
+        return new ProductsService($this->apiKey, $this->version, $this->baseUrl);
     }
 }

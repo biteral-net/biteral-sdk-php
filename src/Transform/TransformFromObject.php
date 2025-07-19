@@ -18,11 +18,11 @@ class TransformFromObject
 
         switch ($object->object) {
             case 'status':
-                return new Status($object, $this);
+                return Status::fromObject($object, $this);
             case 'product':
-                return new Product($object, $this);
+                return Product::fromObject($object, $this);
             case 'api_version':
-                return new ApiVersion($object, $this);
+                return ApiVersion::fromObject($object, $this);
             default:
                 return $object;
         }
@@ -36,6 +36,6 @@ class TransformFromObject
             }
         }
 
-        return new $class($object, $this);
+        return $class::fromObject($object, $this);
     }
 }

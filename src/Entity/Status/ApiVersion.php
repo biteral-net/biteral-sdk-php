@@ -2,20 +2,28 @@
 
 namespace Biteral\Entity\Status;
 
-use Biteral\Entity\Entity;
+use Biteral\Entity\EntityInterface;
 use Biteral\Payload\Status\ApiVersionPayload;
 
 /**
  * Represents the status of the API and the request you made
  */
-class ApiVersion extends Entity {
+class ApiVersion implements EntityInterface {
     /**
      * @var ApiVersionPayload $data
      */
     public $data;
 
-    public function __construct($object, $transformFromObject)
+    public function __construct($data)
     {
-        $this->data = $transformFromObject->payloadFromObject(ApiVersionPayload::class, $object->data);
+        $this->data = $data;
+    }
+
+    public static function fromObject($object, $transformFromObject)
+    {
+        return
+            new ApiVersion(
+                $transformFromObject->payloadFromObject(ApiVersionPayload::class, $object->data)
+            );
     }
 }

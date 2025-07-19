@@ -2,20 +2,28 @@
 
 namespace Biteral\Entity\Status;
 
-use Biteral\Entity\Entity;
+use Biteral\Entity\EntityInterface;
 use Biteral\Payload\Status\StatusPayload;
 
 /**
  * Represents the status of the API and the request you made
  */
-class Status extends Entity {
+class Status implements EntityInterface {
     /**
      * @var StatusPayload $data
      */
     public $data;
 
-    public function __construct($object, $transformFromObject)
+    public function __construct($data)
     {
-        $this->data = $transformFromObject->payloadFromObject(StatusPayload::class, $object->data);
+        $this->data = $data;
+    }
+
+    public static function fromObject($object, $transformFromObject)
+    {
+        return
+            new Status(
+                $transformFromObject->payloadFromObject(StatusPayload::class, $object->data)
+            );
     }
 }

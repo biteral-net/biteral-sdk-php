@@ -13,6 +13,6 @@ final class StatusService extends Service {
      */
     public function get()
     {
-        return $this->request('status');
+        return $this->request(self::METHOD_GET, 'status');
     }
 }
