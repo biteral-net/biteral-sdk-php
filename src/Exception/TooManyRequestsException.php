@@ -2,4 +2,6 @@
 
 namespace Biteral\Exception;
 
-class TooManyRequestsException extends Exception {}
+use Biteral\Exception\ApiException;
+
+class TooManyRequestsException extends ApiException {}

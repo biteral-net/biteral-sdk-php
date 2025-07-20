@@ -2,6 +2,7 @@
 
 namespace Biteral\Service;
 
+use Biteral\Exception\ApiException;
 use Biteral\Entity\Status\Status;
 
 /**
@@ -10,6 +11,7 @@ use Biteral\Entity\Status\Status;
 final class StatusService extends Service {
     /**
      * @return Status
+     * @throws ApiException
      */
     public function get()
     {

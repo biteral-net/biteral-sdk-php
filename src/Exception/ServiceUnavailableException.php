@@ -2,4 +2,6 @@
 
 namespace Biteral\Exception;
 
-class ServiceUnavailableException extends Exception {}
+use Biteral\Exception\ApiException;
+
+class ServiceUnavailableException extends ApiException {}

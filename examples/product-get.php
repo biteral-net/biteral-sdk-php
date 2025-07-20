@@ -1,16 +1,21 @@
 <?php
 
 /**
- * An example on how to get one product to Biteral
+ * Example: Get one product from a Biteral project
  */
 
 require __DIR__.'/../examples/bootstrap.php'; // Don't use this in your code, it's here just to make runing examples easier
 
 use Biteral\Client;
+use Biteral\Exception\NotFoundException;
 
 $client = new Client($apiKey, $apiVersion, $apiBaseUrl);
 
-$product = $client->products()->getByCode('N30122');
+try {
+    $product = $client->products()->getByCode('N30122');
+} catch (NotFoundException $e) {
+    die("Could not find product\n");
+}
 
 $createdAt = new \DateTime('@'.$product->createdAt, new \DateTimeZone('UTC'));
 

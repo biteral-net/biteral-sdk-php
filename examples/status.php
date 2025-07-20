@@ -1,7 +1,7 @@
 <?php
 
 /**
- * An example on how to get Biteral's API status and some information about your request using the /status endpoint
+ * Example: Get Biteral's API status and info about your request
  */
 
 require __DIR__.'/../examples/bootstrap.php'; // Don't use this in your code, it's here just to make runing examples easier

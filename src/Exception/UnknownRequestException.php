@@ -2,4 +2,6 @@
 
 namespace Biteral\Exception;
 
-class UnknownRequestException extends Exception {}
+use Biteral\Exception\ApiException;
+
+class UnknownRequestException extends ApiException {}

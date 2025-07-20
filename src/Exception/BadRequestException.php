@@ -2,4 +2,6 @@
 
 namespace Biteral\Exception;
 
-class BadRequestException extends Exception {}
+use Biteral\Exception\ApiException;
+
+class BadRequestException extends ApiException {}

@@ -2,4 +2,6 @@
 
 namespace Biteral\Exception;
 
-class UnauthorizedException extends Exception {}
+use Biteral\Exception\ApiException;
+
+class UnauthorizedException extends ApiException {}

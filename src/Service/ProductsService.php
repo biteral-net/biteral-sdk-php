@@ -2,6 +2,8 @@
 
 namespace Biteral\Service;
 
+use Biteral\Entity\Product\Product;
+use Biteral\Exception\ApiException;
 use Biteral\Payload\Product\ProductPayload;
 
 /**
@@ -10,6 +12,8 @@ use Biteral\Payload\Product\ProductPayload;
 final class ProductsService extends Service {
     /**
      * @param string $code The code of the product as stored in your systems
+     * @return Product
+     * @throws ApiException
      */
     public function getByCode($code)
     {
@@ -18,6 +22,7 @@ final class ProductsService extends Service {
 
     /**
      * @param string $id The Biteral Id of the product
+     * @throws ApiException
      */
     public function getById($id)
     {
@@ -25,15 +30,8 @@ final class ProductsService extends Service {
     }
 
     /**
-     * @param ProductPayload $productPayload The product payload containing the data to be ingested about a product
-     */
-    public function ingest(ProductPayload $productPayload)
-    {
-        return $this->request(self::METHOD_POST, 'products', null, $productPayload);
-    }
-
-    /**
      * @param string $code The code of the product as stored in your systems
+     * @throws ApiException
      */
     public function deleteByCode($code)
     {
@@ -42,9 +40,30 @@ final class ProductsService extends Service {
 
     /**
      * @param string $id The Biteral Id of the product
+     * @throws ApiException
      */
     public function deleteById($id)
     {
         return $this->request(self::METHOD_DELETE, 'products', ['id' => $id]);
+    }
+
+    /**
+     * @param ProductPayload|ProductPayload[] $productPayload The product payload containing the data to be ingested about a product, or an array of product payloads to be ingested
+     * @throws ApiException
+     */
+    public function ingest($productPayload)
+    {
+        if (!is_array($productPayload)) {
+            return $this->request(self::METHOD_POST, 'products', null, $productPayload);
+        }
+
+        return $this->batchIngest($productPayload);
+    }
+
+    /**
+     * @param mixed $productPayloads
+     */
+    private function batchIngest($productPayloads)
+    {
     }
 }
