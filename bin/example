@@ -22,10 +22,11 @@ source "$ENV_FILE"
 show_available_examples() {
   echo ""
   echo "Available examples:"
+  echo
   for file in examples/*.php; do
     base=$(basename "${file%.php}")
     if [ "$base" != "bootstrap" ]; then
-      echo "$base"
+      echo -e "\t$base"
     fi
   done
   echo ""

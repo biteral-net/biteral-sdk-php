@@ -29,7 +29,22 @@ final class ProductsService extends Service {
      */
     public function ingest(ProductPayload $productPayload)
     {
-        var_dump(json_encode($productPayload, JSON_PRETTY_PRINT)); die;
-        return $this->request(self::METHOD_POST, 'products', null, json_encode($productPayload));
+        return $this->request(self::METHOD_POST, 'products', null, $productPayload);
+    }
+
+    /**
+     * @param string $code The code of the product as stored in your systems
+     */
+    public function deleteByCode($code)
+    {
+        return $this->request(self::METHOD_DELETE, 'products', ['code' => $code]);
+    }
+
+    /**
+     * @param string $id The Biteral Id of the product
+     */
+    public function deleteById($id)
+    {
+        return $this->request(self::METHOD_DELETE, 'products', ['id' => $id]);
     }
 }
