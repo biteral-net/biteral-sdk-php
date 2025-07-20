@@ -31,30 +31,38 @@ composer require biteral/biteral-sdk-php
 ```php
 use Biteral\Client;
 
-require 'vendor/autoload.php';
-
 $client = new Client('your-biteral-api-key');
 
-$product = $client->products()->post(
+$productPayload =
     new ProductPayload(
-        code: 'N39291',
-        title: 'Men’s Urban Sports Sneakers – AirFlow Model',
-        description: 'These sneakers combine style and comfort for everyday use. Designed with breathable materials, non-slip rubber soles, and ergonomic insoles, they are ideal for both walking around the city and indoor training. The AirFlow model offers a perfect fit and a modern design that suits any casual look. Available in various sizes and colors.',
-        price: new PricePayload(45.95, Currency::EURO),
-        attributes: [
-            new ProductAttributePayload('Material', 'leather'),
+        'N30122',
+        'Urban Sports Sneakers for Men - AirFlow Model',
+        'These sneakers combine style and comfort for everyday use. Designed with breathable materials, non-slip rubber sole, and ergonomic insole, they are ideal for both walking around the city and light indoor training. The AirFlow model offers a perfect fit and a modern design that matches any casual look. Available in various sizes and colors.',
+        [
+            new ProductAttributePayload('Material', 'Leather'),
             new ProductAttributePayload('Color', 'black with grey accents'),
-            new ProductAttributePayload('Available Sizes', '39, 40, 41, 42, 43, 44'),
+            new ProductAttributePayload('Available sizes', '39, 40, 41, 42, 43, 44'),
             new ProductAttributePayload('Sole', 'non-slip rubber'),
             new ProductAttributePayload('Weight', '850g (pair, size 42)'),
-            new ProductAttributePayload('Recommended Use', 'Everyday wear and light training')
+            new ProductAttributePayload('Recommended use', 'Daily wear and light training')
         ],
-        brand: new ProductBrandPayload('OW142398', 'Nike'),
-        category: new ProductCategoryPayload('MC418298', 'Sports Sneakers')
-    )
-);
+        new BrandPayload('OW142302', 'Nike'),
+        new ProductCategoryPayload(
+            'MC418292',
+            'Sports Sneakers',
+            'Footwear designed to provide comfort, support, and performance for physical or athletic activities. These sneakers are also suitable for urban and everyday use thanks to their modern designs and versatile materials. They feature non-slip soles, breathable fabrics, and styles that combine functionality with fashion.'
+        ),
+        new PricePayload('49.95', 'EUR'),
+        'https://m.media-amazon.com/images/I/61cELGQXXhL._AC_UL320_.jpg',
+        [
+            'videoUrl' => "https://m.media-amazon.com/videos/C/dk14lkKlsnw._AC_UL1080_.mp4",
+            'currentDiscountRate' => '50%',
+            'isNew' => true,
+            'isFeatured' => false
+        ]
+    );
 
-echo $product->id;
+$client->products()->ingest($productPayload);
 ```
 
 👉 [Get a free Biteral API key](https://biteral.net) for testing your integration

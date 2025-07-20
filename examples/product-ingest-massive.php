@@ -22,9 +22,10 @@ $client = new Client($apiKey, $apiVersion, $apiBaseUrl);
 // Retrieve an array of example data for a few products
 $exampleProductsData = getExampleProductsData(250);
 
-// Retrieve a ProductsBatchIngestService to be reused
+// Obtain a ProductsBatchIngestService
 $productsBatchIngestService = $client->productsBatchIngest();
 
+// Start the ingestion session
 $productsBatchIngestService->startIngestionSession();
 
 foreach ($exampleProductsData as $productData) {
@@ -47,6 +48,7 @@ foreach ($exampleProductsData as $productData) {
     $productsBatchIngestService->ingest($productPayload);
 }
 
+// Finish the ingestion session
 $batchIngestResult = $productsBatchIngestService->finishIngestionSession();
 
 echo $batchIngestResult->ingestedProductsCount." products ingested in ".$batchIngestResult->batchesCount." batches\n";

@@ -3,10 +3,10 @@
 namespace Biteral\Payload\Status;
 
 use DateTime;
+use Biteral\Payload\Payload;
 use Biteral\Entity\Status\ApiVersion;
-use Biteral\Payload\PayloadInterface;
 
-class StatusPayload implements PayloadInterface {
+class StatusPayload extends Payload {
     /**
      * @var ApiVersion[] The API versions that are available on this server
      */
