@@ -31,7 +31,7 @@ echo
         "attributes: \n".
         implode(
             array_map(
-                function ($attribute) { return '  '.$attribute->id.' > '.$attribute->data->name.': '.$attribute->data->value."\n"; },
+                function ($attribute) { return '  '.$attribute->id.' > '.$attribute->data->title.': '.$attribute->data->value."\n"; },
                 $product->data->attributes
             )
         )

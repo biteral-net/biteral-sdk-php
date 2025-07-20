@@ -2,9 +2,9 @@
 
 namespace Biteral\Payload\Status;
 
-use Biteral\Payload\PayloadInterface;
+use Biteral\Payload\Payload;
 
-class ApiVersionPayload implements PayloadInterface {
+class ApiVersionPayload extends Payload {
     /**
      * @var string $version The full version string
      */

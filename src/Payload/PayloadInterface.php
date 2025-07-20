@@ -2,6 +2,8 @@
 
 namespace Biteral\Payload;
 
-interface PayloadInterface {
+use JsonSerializable;
+
+interface PayloadInterface extends JsonSerializable {
     public static function fromObject($object, $transformFromObject);
 }

@@ -2,9 +2,9 @@
 
 namespace Biteral\Payload\Shared;
 
-use Biteral\Payload\PayloadInterface;
+use Biteral\Payload\Payload;
 
-class PricePayload implements PayloadInterface {
+class PricePayload extends Payload {
     /**
      * @var string $amount The amount in string format, with any needed decimal places and using '.' as a decimal separator. For example: '24.95'
      */

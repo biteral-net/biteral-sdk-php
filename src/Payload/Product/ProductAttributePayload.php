@@ -2,13 +2,13 @@
 
 namespace Biteral\Payload\Product;
 
-use Biteral\Payload\PayloadInterface;
+use Biteral\Payload\Payload;
 
-class ProductAttributePayload implements PayloadInterface {
+class ProductAttributePayload extends Payload {
     /**
-     * @var string $name The name of the attribute
+     * @var string $title The title of the attribute
      */
-    public $name;
+    public $title;
 
     /**
      * @var string $value The value of the attribute
@@ -16,11 +16,11 @@ class ProductAttributePayload implements PayloadInterface {
     public $value;
 
     public function __construct(
-        $name,
+        $title,
         $value
     )
     {
-        $this->name = $name;
+        $this->title = $title;
         $this->value = $value;
     }
 
@@ -28,7 +28,7 @@ class ProductAttributePayload implements PayloadInterface {
     {
         return
             new ProductAttributePayload(
-                $object->name,
+                $object->title,
                 $object->value
             );
     }

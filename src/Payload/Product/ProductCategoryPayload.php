@@ -2,9 +2,9 @@
 
 namespace Biteral\Payload\Product;
 
-use Biteral\Payload\PayloadInterface;
+use Biteral\Payload\Payload;
 
-class ProductCategoryPayload implements PayloadInterface {
+class ProductCategoryPayload extends Payload {
     /**
      * @var string $code The code of the category as stored in your system
      */

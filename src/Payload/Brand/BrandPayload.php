@@ -2,9 +2,9 @@
 
 namespace Biteral\Payload\Brand;
 
-use Biteral\Payload\PayloadInterface;
+use Biteral\Payload\Payload;
 
-class BrandPayload implements PayloadInterface {
+class BrandPayload extends Payload {
     /**
      * @var string $code The code of the brand as stored in your system
      */
