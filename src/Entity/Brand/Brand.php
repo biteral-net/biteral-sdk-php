@@ -1,15 +1,15 @@
 <?php
 
-namespace Biteral\Entity\Product;
+namespace Biteral\Entity\Brand;
 
 use DateTime;
 use Biteral\Entity\EntityInterface;
-use Biteral\Payload\Product\ProductPayload;
+use Biteral\Payload\Brand\BrandPayload;
 
 /**
- * Represents a product
+ * Represents a brand
  */
-class Product implements EntityInterface {
+class Brand implements EntityInterface {
     /**
      * @var string $id The product id
      */
@@ -26,17 +26,7 @@ class Product implements EntityInterface {
     public $updatedAt;
 
     /**
-     * @var bool $isActive Whether this product is active at Biteral
-     */
-    public $isActive;
-
-    /**
-     * @var string $projectId The Id of the project this product belongs to
-     */
-    public $projectId;
-
-    /**
-     * @var ProductPayload $data
+     * @var BrandPayload $data
      */
     public $data;
 
@@ -44,16 +34,12 @@ class Product implements EntityInterface {
         $id,
         $createdAt,
         $updatedAt,
-        $isActive,
-        $projectId,
         $data
     )
     {
         $this->id = $id;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
-        $this->isActive = $isActive;
-        $this->projectId = $projectId;
         $this->data = $data;
     }
 
@@ -66,13 +52,11 @@ class Product implements EntityInterface {
         $updatedAt = $updatedAt->getTimestamp();
 
         return
-            new Product(
+            new Brand(
                 $object->id,
                 $createdAt,
                 $updatedAt,
-                $object->isActive,
-                $object->projectId,
-                $transformFromObject->payloadFromObject(ProductPayload::class, $object->data)
+                $transformFromObject->payloadFromObject(BrandPayload::class, $object->data)
             );
     }
 }

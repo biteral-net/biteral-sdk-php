@@ -1,6 +1,6 @@
 <?php
 
-namespace Biteral\Payload\Product;
+namespace Biteral\Payload\Brand;
 
 use Biteral\Payload\PayloadInterface;
 

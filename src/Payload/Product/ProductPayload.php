@@ -65,9 +65,9 @@ class ProductPayload implements PayloadInterface {
                 $object->title,
                 $object->description,
                 $transformFromObject->payloadFromObject(PricePayload::class, $object->price),
-                $transformFromObject->payloadFromObject(ProductAttributePayload::class, $object->attributes),
-                $transformFromObject->payloadFromObject(BrandPayload::class, $object->brand),
-                $transformFromObject->payloadFromObject(ProductCategoryPayload::class, $object->brand),
+                $transformFromObject->entityFromObject($object->attributes),
+                $transformFromObject->entityFromObject($object->brand),
+                $transformFromObject->entityFromObject($object->category),
                 $object->imageUrl,
                 $object->metadata
             );

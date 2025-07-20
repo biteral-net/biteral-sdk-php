@@ -6,9 +6,9 @@ use Biteral\Payload\PayloadInterface;
 
 class ProductAttributePayload implements PayloadInterface {
     /**
-     * @var string $title The title of the attribute
+     * @var string $name The name of the attribute
      */
-    public $title;
+    public $name;
 
     /**
      * @var string $value The value of the attribute
@@ -16,11 +16,11 @@ class ProductAttributePayload implements PayloadInterface {
     public $value;
 
     public function __construct(
-        $title,
+        $name,
         $value
     )
     {
-        $this->title = $title;
+        $this->name = $name;
         $this->value = $value;
     }
 
@@ -28,7 +28,7 @@ class ProductAttributePayload implements PayloadInterface {
     {
         return
             new ProductAttributePayload(
-                $object->title,
+                $object->name,
                 $object->value
             );
     }
