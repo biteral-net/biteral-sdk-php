@@ -2,7 +2,7 @@
 
 namespace Biteral\Service\Product;
 
-class IngestResult
+class BatchIngestResult
 {
     public $ingestedProductsCount;
     public $batchesCount;

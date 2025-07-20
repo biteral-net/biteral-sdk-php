@@ -50,18 +50,12 @@ final class ProductsService extends Service {
     }
 
     /**
-     * @param ProductPayload|ProductPayload[] $productPayload The product payload containing the data to be ingested about a product, or an array of product payloads to be ingested
-     * @return IngestResult Details on the ingest process
+     * @param ProductPayload $productPayload The product payload containing the data to be ingested about a product, or an array of product payloads to be ingested
      * @throws ApiException
      */
     public function ingest($productPayload)
     {
-        if (is_array($productPayload)) {
-            return $this->batchIngest($productPayload);
-        }
-
         $this->request(self::METHOD_POST, 'products', null, $productPayload);
-        return new IngestResult(1, 1);
     }
 
     /**

@@ -7,3 +7,9 @@ $apiVersion = getenv('BITERAL_API_VERSION') !== false ? getenv('BITERAL_API_VERS
 require __DIR__.'/../../vendor/autoload.php';
 
 set_time_limit(0);
+
+function getExampleProductsData($limit = null)
+{
+    $exampleProductsData = include(__DIR__.'/../../examples/include/example_products_data.php');
+    return $limit && $limit < sizeof($exampleProductsData) ? array_slice($exampleProductsData, 0, $limit) : $exampleProductsData;
+}
