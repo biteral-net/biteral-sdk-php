@@ -26,21 +26,21 @@ class ProductCategory implements EntityInterface {
     public $updatedAt;
 
     /**
-     * @var ProductCategoryPayload $data
+     * @var ProductCategoryPayload $payload
      */
-    public $data;
+    public $payload;
 
     public function __construct(
         $id,
         $createdAt,
         $updatedAt,
-        $data
+        $payload
     )
     {
         $this->id = $id;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
-        $this->data = $data;
+        $this->payload = $payload;
     }
 
     public static function fromObject($object, $transformFromObject)
@@ -56,7 +56,7 @@ class ProductCategory implements EntityInterface {
                 $object->id,
                 $createdAt,
                 $updatedAt,
-                $transformFromObject->payloadFromObject(ProductCategoryPayload::class, $object->data)
+                $transformFromObject->payloadFromObject(ProductCategoryPayload::class, $object->payload)
             );
     }
 }

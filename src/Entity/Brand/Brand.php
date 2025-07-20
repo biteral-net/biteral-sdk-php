@@ -26,21 +26,21 @@ class Brand implements EntityInterface {
     public $updatedAt;
 
     /**
-     * @var BrandPayload $data
+     * @var BrandPayload $payload
      */
-    public $data;
+    public $payload;
 
     public function __construct(
         $id,
         $createdAt,
         $updatedAt,
-        $data
+        $payload
     )
     {
         $this->id = $id;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
-        $this->data = $data;
+        $this->payload = $payload;
     }
 
     public static function fromObject($object, $transformFromObject)
@@ -56,7 +56,7 @@ class Brand implements EntityInterface {
                 $object->id,
                 $createdAt,
                 $updatedAt,
-                $transformFromObject->payloadFromObject(BrandPayload::class, $object->data)
+                $transformFromObject->payloadFromObject(BrandPayload::class, $object->payload)
             );
     }
 }

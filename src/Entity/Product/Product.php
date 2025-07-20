@@ -26,35 +26,28 @@ class Product implements EntityInterface {
     public $updatedAt;
 
     /**
-     * @var bool $isActive Whether this product is active at Biteral
-     */
-    public $isActive;
-
-    /**
      * @var string $projectId The Id of the project this product belongs to
      */
     public $projectId;
 
     /**
-     * @var ProductPayload $data
+     * @var ProductPayload $payload
      */
-    public $data;
+    public $payload;
 
     public function __construct(
         $id,
         $createdAt,
         $updatedAt,
-        $isActive,
         $projectId,
-        $data
+        $payload
     )
     {
         $this->id = $id;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
-        $this->isActive = $isActive;
         $this->projectId = $projectId;
-        $this->data = $data;
+        $this->payload = $payload;
     }
 
     public static function fromObject($object, $transformFromObject)
@@ -70,9 +63,8 @@ class Product implements EntityInterface {
                 $object->id,
                 $createdAt,
                 $updatedAt,
-                $object->isActive,
                 $object->projectId,
-                $transformFromObject->payloadFromObject(ProductPayload::class, $object->data)
+                $transformFromObject->payloadFromObject(ProductPayload::class, $object->payload)
             );
     }
 }

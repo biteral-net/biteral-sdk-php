@@ -10,20 +10,20 @@ use Biteral\Payload\Status\ApiVersionPayload;
  */
 class ApiVersion implements EntityInterface {
     /**
-     * @var ApiVersionPayload $data
+     * @var ApiVersionPayload $payload
      */
-    public $data;
+    public $payload;
 
-    public function __construct($data)
+    public function __construct($payload)
     {
-        $this->data = $data;
+        $this->payload = $payload;
     }
 
     public static function fromObject($object, $transformFromObject)
     {
         return
             new ApiVersion(
-                $transformFromObject->payloadFromObject(ApiVersionPayload::class, $object->data)
+                $transformFromObject->payloadFromObject(ApiVersionPayload::class, $object->payload)
             );
     }
 }

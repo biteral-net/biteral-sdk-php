@@ -11,20 +11,20 @@ use Biteral\Payload\Error\ErrorPayload;
  */
 class Error implements EntityInterface {
     /**
-     * @var ErrorPayload $data
+     * @var ErrorPayload $payload
      */
-    public $data;
+    public $payload;
 
-    public function __construct($data)
+    public function __construct($payload)
     {
-        $this->data = $data;
+        $this->payload = $payload;
     }
 
     public static function fromObject($object, $transformFromObject)
     {
         return
             new Error(
-                $transformFromObject->payloadFromObject(ErrorPayload::class, $object->data)
+                $transformFromObject->payloadFromObject(ErrorPayload::class, $object->payload)
             );
     }
 }

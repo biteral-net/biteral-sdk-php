@@ -53,12 +53,18 @@ class ProductPayload extends Payload {
     public $imageUrl;
 
     /**
+     * @var bool $isActive Whether this product is active at Biteral
+     */
+    public $isActive;
+
+    /**
      * @var mixed $metadata The product metadata
      */
     public $metadata;
 
     public function __construct(
         $code,
+        $isActive = null,
         $title,
         $description = null,
         $attributes = null,
@@ -70,6 +76,7 @@ class ProductPayload extends Payload {
     )
     {
         $this->code = $code;
+        $this->isActive = $isActive;
         $this->title = $title;
         $this->description = $description;
         $this->attributes = $attributes;
@@ -85,6 +92,7 @@ class ProductPayload extends Payload {
         return
             new ProductPayload(
                 $object->code,
+                $object->isActive,
                 $object->title,
                 $object->description,
                 $transformFromObject->entityFromObject($object->attributes),

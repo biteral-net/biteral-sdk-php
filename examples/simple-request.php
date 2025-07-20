@@ -12,4 +12,4 @@ $client = new Client($apiKey, $apiVersion, $apiBaseUrl);
 
 $status = $client->status()->get();
 
-echo "Your client id is: ".$status->data->clientId."\n";
+echo "Your client id is: ".$status->payload->clientId."\n";

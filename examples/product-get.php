@@ -27,28 +27,28 @@ echo
     'id: '.$product->id."\n".
     'createdAt: '.$createdAt->format('c')."\n".
     ($updatedAt ? 'updatedAt: '.$updatedAt->format('c')."\n" : '').
-    'isActive: '.($product->isActive ? 'Y' : 'N')."\n".
     'projectId: '.$product->projectId."\n".
-    'code: '.$product->data->code."\n".
-    'title: '.$product->data->title."\n".
-    'description: '.$product->data->description."\n".
-    (is_array($product->data->attributes) ?
+    'code: '.$product->payload->code."\n".
+    'isActive: '.($product->payload->isActive ? 'Y' : 'N')."\n".
+    'title: '.$product->payload->title."\n".
+    'description: '.$product->payload->description."\n".
+    (is_array($product->payload->attributes) ?
         "attributes: \n".
         implode(
             array_map(
-                function ($attribute) { return '  '.$attribute->id.' > '.$attribute->data->title.': '.$attribute->data->value."\n"; },
-                $product->data->attributes
+                function ($attribute) { return '  '.$attribute->id.' > '.$attribute->payload->title.': '.$attribute->payload->value."\n"; },
+                $product->payload->attributes
             )
         )
     : '').
-    ($product->data->brand ?
-        'brand: '.$product->data->brand->id.' > '.$product->data->brand->data->code.': '.$product->data->brand->data->name."\n"
+    ($product->payload->brand ?
+        'brand: '.$product->payload->brand->id.' > '.$product->payload->brand->payload->code.': '.$product->payload->brand->payload->name."\n"
     : '').
-    ($product->data->category ?
-        'category: '.$product->data->category->id.' > '.$product->data->category->data->code.': '.$product->data->category->data->title.' / '.$product->data->category->data->description."\n"
+    ($product->payload->category ?
+        'category: '.$product->payload->category->id.' > '.$product->payload->category->payload->code.': '.$product->payload->category->payload->title.' / '.$product->payload->category->payload->description."\n"
     : '').
-    ($product->data->price ?
-        'price: '.$product->data->price->amount.$product->data->price->currency."\n"
+    ($product->payload->price ?
+        'price: '.$product->payload->price->amount.$product->payload->price->currency."\n"
     : '').
-    ($product->data->imageUrl ? 'imageUrl: '.$product->data->imageUrl."\n" : '').
-    ($product->data->metadata ? 'metadata: '."\n".json_encode($product->data->metadata, JSON_PRETTY_PRINT)."\n" : '');
+    ($product->payload->imageUrl ? 'imageUrl: '.$product->payload->imageUrl."\n" : '').
+    ($product->payload->metadata ? 'metadata: '."\n".json_encode($product->payload->metadata, JSON_PRETTY_PRINT)."\n" : '');

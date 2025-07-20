@@ -85,7 +85,7 @@ abstract class Service {
 
         $response = $this->transformResponse($response);
 
-        $errorMessage = $response->data->code.($curlError ? ' / '.$curlError : '');
+        $errorMessage = $response->payload->code.($curlError ? ' / '.$curlError : '');
 
         switch ($statusCode) {
             case 200:
