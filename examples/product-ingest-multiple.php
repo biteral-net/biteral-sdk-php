@@ -4,46 +4,47 @@
  * Example: Ingest multiple products into a Biteral project
  */
 
-require __DIR__.'/../examples/bootstrap.php'; // Don't use this in your code, it's here just to make runing examples easier
+require __DIR__.'/../examples/include/bootstrap.php'; // Don't use this in your code, it's here just to make runing examples easier
 
 use Biteral\Client;
-use Biteral\Payload\Brand\BrandPayload;
 use Biteral\Payload\Shared\PricePayload;
 use Biteral\Payload\Product\ProductPayload;
-use Biteral\Payload\Product\ProductCategoryPayload;
-use Biteral\Payload\Product\ProductAttributePayload;
 
 $client = new Client($apiKey, $apiVersion, $apiBaseUrl);
 
-$productPayload =
-    new ProductPayload(
-        'N30122',
-        'Urban Sports Sneakers for Men - AirFlow Model',
-        'These sneakers combine style and comfort for everyday use. Designed with breathable materials, non-slip rubber sole, and ergonomic insole, they are ideal for both walking around the city and light indoor training. The AirFlow model offers a perfect fit and a modern design that matches any casual look. Available in various sizes and colors.',
-        [
-            new ProductAttributePayload('Material', 'Leather'),
-            new ProductAttributePayload('Color', 'black with grey accents'),
-            new ProductAttributePayload('Available sizes', '39, 40, 41, 42, 43, 44'),
-            new ProductAttributePayload('Sole', 'non-slip rubber'),
-            new ProductAttributePayload('Weight', '850g (pair, size 42)'),
-            new ProductAttributePayload('Recommended use', 'Daily wear and light training')
-        ],
-        new BrandPayload('OW142302', 'Nike'),
-        new ProductCategoryPayload(
-            'MC418292',
-            'Sports Sneakers',
-            'Footwear designed to provide comfort, support, and performance for physical or athletic activities. These sneakers are also suitable for urban and everyday use thanks to their modern designs and versatile materials. They feature non-slip soles, breathable fabrics, and styles that combine functionality with fashion.'
-        ),
-        new PricePayload('49.95', 'EUR'),
-        'https://m.media-amazon.com/images/I/61cELGQXXhL._AC_UL320_.jpg',
-        [
-            'videoUrl' => "https://m.media-amazon.com/videos/C/dk14lkKlsnw._AC_UL1080_.mp4",
-            'currentDiscountRate' => '50%',
-            'isNew' => true,
-            'isFeatured' => false
-        ]
-    );
+// Retrieve an array of example products data
+$exampleProductsData = include(__DIR__.'/../examples/include/example_products_data.php');
 
-$client->products()->ingest($productPayload);
+$count = 0;
+$productPayloads = []; // Prepare an array to contain all ProductPayload objects
+foreach ($exampleProductsData as $productData) {
 
-echo "Product has been ingested\n";
+    // Create a ProductPayload object for this example product
+    $productPayload =
+        new ProductPayload(
+            $productData['code'],
+            $productData['title'],
+            null,
+            null,
+            null,
+            null,
+            new PricePayload($productData['price_amount'], $productData['price_currency']),
+            $productData['image_url'],
+            null
+        );
+
+    // Add the ProductPayload to the array
+    $productPayloads[] = $productPayload;
+
+    $count ++;
+
+    // Consider only the first 250 example products
+    if ($count === 250) {
+        break;
+    }
+}
+
+// Call `ingest` passing the array of ProductPayload objects instead of a single ProductPayload
+$ingestResult = $client->products()->ingest($productPayloads);
+
+echo $ingestResult->ingestedProductsCount." products ingested in ".$ingestResult->batchesCount." batches\n";

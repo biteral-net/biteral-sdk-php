@@ -1,9 +1,11 @@
 <?php
 
-namespace Biteral\Service;
+namespace Biteral\Service\Product;
 
+use Biteral\Service\Service;
 use Biteral\Entity\Product\Product;
 use Biteral\Exception\ApiException;
+use Biteral\Service\Product\IngestResult;
 use Biteral\Payload\Product\ProductPayload;
 
 /**
@@ -49,21 +51,45 @@ final class ProductsService extends Service {
 
     /**
      * @param ProductPayload|ProductPayload[] $productPayload The product payload containing the data to be ingested about a product, or an array of product payloads to be ingested
+     * @return IngestResult Details on the ingest process
      * @throws ApiException
      */
     public function ingest($productPayload)
     {
-        if (!is_array($productPayload)) {
-            return $this->request(self::METHOD_POST, 'products', null, $productPayload);
+        if (is_array($productPayload)) {
+            return $this->batchIngest($productPayload);
         }
 
-        return $this->batchIngest($productPayload);
+        $this->request(self::METHOD_POST, 'products', null, $productPayload);
+        return new IngestResult(1, 1);
     }
 
     /**
      * @param mixed $productPayloads
+     * @return IngestResult Details on the ingest process
+     * @throws ApiException
      */
     private function batchIngest($productPayloads)
     {
+        $ingestedProductsCount = 0;
+        $batchesCount = 0;
+        $batchProductPayloads = [];
+        foreach ($productPayloads as $productPayload) {
+            $ingestedProductsCount ++;
+            $batchProductPayloads[] = $productPayload;
+
+            if ($ingestedProductsCount % 100 === 0) {
+                $this->request(self::METHOD_POST, 'products', null, $batchProductPayloads);
+                $batchesCount ++;
+                $batchProductPayloads = [];
+            }
+        }
+
+        if ($batchProductPayloads) {
+            $this->request(self::METHOD_POST, 'products', null, $batchProductPayloads);
+            $batchesCount ++;
+        }
+
+        return new IngestResult($ingestedProductsCount, $batchesCount);
     }
 }

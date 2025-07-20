@@ -2,8 +2,8 @@
 
 namespace Biteral;
 
-use Biteral\Service\StatusService;
-use Biteral\Service\ProductsService;
+use Biteral\Service\Status\StatusService;
+use Biteral\Service\Product\ProductsService;
 
 /**
  * The main entrypoint to start using the SDK

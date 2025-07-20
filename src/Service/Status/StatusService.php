@@ -1,9 +1,10 @@
 <?php
 
-namespace Biteral\Service;
+namespace Biteral\Service\Status;
 
-use Biteral\Exception\ApiException;
+use Biteral\Service\Service;
 use Biteral\Entity\Status\Status;
+use Biteral\Exception\ApiException;
 
 /**
  * The service that allows you to request information about the status of the API and the request itself

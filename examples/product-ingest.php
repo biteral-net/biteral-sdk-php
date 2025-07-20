@@ -4,7 +4,7 @@
  * Example: Ingest one product into a Biteral project
  */
 
-require __DIR__.'/../examples/bootstrap.php'; // Don't use this in your code, it's here just to make runing examples easier
+require __DIR__.'/../examples/include/bootstrap.php'; // Don't use this in your code, it's here just to make runing examples easier
 
 use Biteral\Client;
 use Biteral\Payload\Brand\BrandPayload;

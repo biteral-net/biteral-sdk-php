@@ -24,18 +24,17 @@ show_available_examples() {
   echo "Available examples:"
   echo
   for file in examples/*.php; do
+
     base=$(basename "${file%.php}")
-    if [ "$base" != "bootstrap" ]; then
 
-      example_line=$(grep -m1 '^\s*\*\s*Example:' "$file" | sed -E 's/^\s*\*\s*Example:\s*//')
+    example_line=$(grep -m1 '^\s*\*\s*Example:' "$file" | sed -E 's/^\s*\*\s*Example:\s*//')
 
-      if [ -n "$example_line" ]; then
+    if [ -n "$example_line" ]; then
         printf "  \033[34m%s\033[0m - %s\n" "$base" "$example_line"
-      else
+    else
         printf "  \033[34m%s\033[0m\n" "$base"
-      fi
-
     fi
+
   done
   echo ""
 }
