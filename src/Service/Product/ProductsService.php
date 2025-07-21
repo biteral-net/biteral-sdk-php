@@ -5,7 +5,6 @@ namespace Biteral\Service\Product;
 use Biteral\Service\Service;
 use Biteral\Entity\Product\Product;
 use Biteral\Exception\ApiException;
-use Biteral\Service\Product\IngestResult;
 use Biteral\Payload\Product\ProductPayload;
 
 /**
@@ -56,34 +55,5 @@ final class ProductsService extends Service {
     public function ingest($productPayload)
     {
         $this->request(self::METHOD_POST, 'products', null, $productPayload);
-    }
-
-    /**
-     * @param mixed $productPayloads
-     * @return IngestResult Details on the ingest process
-     * @throws ApiException
-     */
-    private function batchIngest($productPayloads)
-    {
-        $ingestedProductsCount = 0;
-        $batchesCount = 0;
-        $batchProductPayloads = [];
-        foreach ($productPayloads as $productPayload) {
-            $ingestedProductsCount ++;
-            $batchProductPayloads[] = $productPayload;
-
-            if ($ingestedProductsCount % 100 === 0) {
-                $this->request(self::METHOD_POST, 'products', null, $batchProductPayloads);
-                $batchesCount ++;
-                $batchProductPayloads = [];
-            }
-        }
-
-        if ($batchProductPayloads) {
-            $this->request(self::METHOD_POST, 'products', null, $batchProductPayloads);
-            $batchesCount ++;
-        }
-
-        return new IngestResult($ingestedProductsCount, $batchesCount);
     }
 }

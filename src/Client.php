@@ -4,6 +4,7 @@ namespace Biteral;
 
 use Biteral\Service\Status\StatusService;
 use Biteral\Service\Product\ProductsService;
+use Biteral\Service\NaturalSearch\NaturalSearchService;
 use Biteral\Service\Product\ProductsBatchIngestService;
 
 /**
@@ -56,5 +57,14 @@ class Client
     public function productsBatchIngest()
     {
         return new ProductsBatchIngestService($this->apiKey, $this->version, $this->baseUrl);
+    }
+
+    /**
+     * Retrieve a NaturalSearchService object to interact with the natural search tool
+     * @return NaturalSearchService
+     */
+    public function naturalSearch()
+    {
+        return new NaturalSearchService($this->apiKey, $this->version, $this->baseUrl);
     }
 }

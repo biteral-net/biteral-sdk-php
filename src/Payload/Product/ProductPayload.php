@@ -64,7 +64,6 @@ class ProductPayload extends Payload {
 
     public function __construct(
         $code,
-        $isActive = null,
         $title,
         $description = null,
         $attributes = null,
@@ -72,11 +71,11 @@ class ProductPayload extends Payload {
         $category = null,
         $price = null,
         $imageUrl = null,
-        $metadata = null
+        $metadata = null,
+        $isActive = null
     )
     {
         $this->code = $code;
-        $this->isActive = $isActive;
         $this->title = $title;
         $this->description = $description;
         $this->attributes = $attributes;
@@ -85,6 +84,7 @@ class ProductPayload extends Payload {
         $this->price = $price;
         $this->imageUrl = $imageUrl;
         $this->metadata = $metadata;
+        $this->isActive = $isActive;
     }
 
     public static function fromObject($object, $transformFromObject)
@@ -92,7 +92,6 @@ class ProductPayload extends Payload {
         return
             new ProductPayload(
                 $object->code,
-                $object->isActive,
                 $object->title,
                 $object->description,
                 $transformFromObject->entityFromObject($object->attributes),
@@ -100,7 +99,8 @@ class ProductPayload extends Payload {
                 $transformFromObject->entityFromObject($object->category),
                 $transformFromObject->payloadFromObject(PricePayload::class, $object->price),
                 $object->imageUrl,
-                $object->metadata
+                $object->metadata,
+                $object->isActive
             );
     }
 
