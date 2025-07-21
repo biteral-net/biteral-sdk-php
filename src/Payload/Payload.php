@@ -2,4 +2,9 @@
 
 namespace Biteral\Payload;
 
-class Payload {}
+abstract class Payload implements PayloadInterface {
+    public function jsonSerialize()
+    {
+        return $this;
+    }
+}

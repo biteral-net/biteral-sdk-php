@@ -22,17 +22,26 @@ source "$ENV_FILE"
 show_available_examples() {
   echo ""
   echo "Available examples:"
+  echo
   for file in examples/*.php; do
+
     base=$(basename "${file%.php}")
-    if [ "$base" != "bootstrap" ]; then
-      echo "$base"
+
+    example_line=$(grep -m1 '^\s*\*\s*Example:' "$file" | sed -E 's/^\s*\*\s*Example:\s*//')
+
+    if [ -n "$example_line" ]; then
+        printf "  \033[34m%s\033[0m - %s\n" "$base" "$example_line"
+    else
+        printf "  \033[34m%s\033[0m\n" "$base"
     fi
+
   done
   echo ""
 }
 
 if [ -z "$1" ]; then
-  echo "Usage: ./bin/example <example-name>"
+  printf "\033[1mUsage\033[0m: \033[93mbin/example\033[0m \033[34m<example-name>\033[0m\n"
+
   show_available_examples
   exit 1
 fi

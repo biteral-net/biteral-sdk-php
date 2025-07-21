@@ -5,11 +5,12 @@ namespace Biteral\Entity\Product;
 use DateTime;
 use Biteral\Entity\EntityInterface;
 use Biteral\Payload\Product\ProductPayload;
+use Biteral\Payload\Product\ProductAttributePayload;
 
 /**
- * Represents a product
+ * Represents a product's attribute
  */
-class Product implements EntityInterface {
+class ProductAttribute implements EntityInterface {
     /**
      * @var string $id The product id
      */
@@ -26,12 +27,7 @@ class Product implements EntityInterface {
     public $updatedAt;
 
     /**
-     * @var string $projectId The Id of the project this product belongs to
-     */
-    public $projectId;
-
-    /**
-     * @var ProductPayload $payload
+     * @var ProductAttributePayload $payload
      */
     public $payload;
 
@@ -39,14 +35,12 @@ class Product implements EntityInterface {
         $id,
         $createdAt,
         $updatedAt,
-        $projectId,
         $payload
     )
     {
         $this->id = $id;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
-        $this->projectId = $projectId;
         $this->payload = $payload;
     }
 
@@ -59,12 +53,11 @@ class Product implements EntityInterface {
         $updatedAt = $updatedAt->getTimestamp();
 
         return
-            new Product(
+            new ProductAttribute(
                 $object->id,
                 $createdAt,
                 $updatedAt,
-                $object->projectId,
-                $transformFromObject->payloadFromObject(ProductPayload::class, $object->payload)
+                $transformFromObject->payloadFromObject(ProductAttributePayload::class, $object->payload)
             );
     }
 }

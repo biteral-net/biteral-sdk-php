@@ -2,4 +2,6 @@
 
 namespace Biteral\Exception;
 
-class ConflictException extends Exception {}
+use Biteral\Exception\ApiException;
+
+class ConflictException extends ApiException {}

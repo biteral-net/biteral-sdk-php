@@ -2,4 +2,6 @@
 
 namespace Biteral\Exception;
 
-class NotFoundException extends Exception {}
+use Biteral\Exception\ApiException;
+
+class NotFoundException extends ApiException {}

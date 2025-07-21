@@ -2,4 +2,6 @@
 
 namespace Biteral\Exception;
 
-class ConnectionException extends Exception {}
+use Biteral\Exception\ApiException;
+
+class ConnectionException extends ApiException {}

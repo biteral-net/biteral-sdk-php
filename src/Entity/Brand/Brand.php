@@ -1,15 +1,15 @@
 <?php
 
-namespace Biteral\Entity\Product;
+namespace Biteral\Entity\Brand;
 
 use DateTime;
 use Biteral\Entity\EntityInterface;
-use Biteral\Payload\Product\ProductPayload;
+use Biteral\Payload\Brand\BrandPayload;
 
 /**
- * Represents a product
+ * Represents a brand
  */
-class Product implements EntityInterface {
+class Brand implements EntityInterface {
     /**
      * @var string $id The product id
      */
@@ -26,12 +26,7 @@ class Product implements EntityInterface {
     public $updatedAt;
 
     /**
-     * @var string $projectId The Id of the project this product belongs to
-     */
-    public $projectId;
-
-    /**
-     * @var ProductPayload $payload
+     * @var BrandPayload $payload
      */
     public $payload;
 
@@ -39,14 +34,12 @@ class Product implements EntityInterface {
         $id,
         $createdAt,
         $updatedAt,
-        $projectId,
         $payload
     )
     {
         $this->id = $id;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
-        $this->projectId = $projectId;
         $this->payload = $payload;
     }
 
@@ -59,12 +52,11 @@ class Product implements EntityInterface {
         $updatedAt = $updatedAt->getTimestamp();
 
         return
-            new Product(
+            new Brand(
                 $object->id,
                 $createdAt,
                 $updatedAt,
-                $object->projectId,
-                $transformFromObject->payloadFromObject(ProductPayload::class, $object->payload)
+                $transformFromObject->payloadFromObject(BrandPayload::class, $object->payload)
             );
     }
 }

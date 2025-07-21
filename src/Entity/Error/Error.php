@@ -1,16 +1,17 @@
 <?php
 
-namespace Biteral\Entity\Status;
+namespace Biteral\Entity\Error;
 
 use Biteral\Entity\EntityInterface;
-use Biteral\Payload\Status\ApiVersionPayload;
+use Biteral\Payload\Error\ErrorPayload;
+
 
 /**
  * Represents the status of the API and the request you made
  */
-class ApiVersion implements EntityInterface {
+class Error implements EntityInterface {
     /**
-     * @var ApiVersionPayload $payload
+     * @var ErrorPayload $payload
      */
     public $payload;
 
@@ -22,8 +23,8 @@ class ApiVersion implements EntityInterface {
     public static function fromObject($object, $transformFromObject)
     {
         return
-            new ApiVersion(
-                $transformFromObject->payloadFromObject(ApiVersionPayload::class, $object->payload)
+            new Error(
+                $transformFromObject->payloadFromObject(ErrorPayload::class, $object->payload)
             );
     }
 }

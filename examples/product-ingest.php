@@ -1,37 +1,19 @@
-# Biteral PHP SDK
+<?php
 
-Easily integrate [Biteral](https://biteral.net) AI tools into your e-commerce platform.
+/**
+ * Example: Ingest one product into a Biteral project
+ */
 
-- 🔎 Natural language product search
-- 🧠 AI-powered product recommendations
-- 🏷️ Customer tagging and segmentation
-- 📊 Real-time trend recommendations
+require __DIR__.'/../examples/include/bootstrap.php'; // Don't use this in your code, it's here just to make runing examples easier
 
-SDK usage guides and API documentation 👉 https://docs.biteral.net
-
-[![Packagist](https://img.shields.io/packagist/v/biteral/biteral-sdk-php.svg)](https://packagist.org/packages/biteral/biteral-sdk-php)
-[![PHP Version](https://img.shields.io/packagist/php-v/biteral/biteral-sdk-php.svg)](https://packagist.org/packages/biteral/biteral-sdk-php)
-
----
-
-## Requirements
-
-- PHP 5.6 or higher
-- [Composer](https://getcomposer.org)
-- Bash, for running examples
-
-## Installation
-
-```bash
-composer require biteral/biteral-sdk-php
-```
-
-## Usage
-
-```php
 use Biteral\Client;
+use Biteral\Payload\Brand\BrandPayload;
+use Biteral\Payload\Shared\PricePayload;
+use Biteral\Payload\Product\ProductPayload;
+use Biteral\Payload\Product\ProductCategoryPayload;
+use Biteral\Payload\Product\ProductAttributePayload;
 
-$client = new Client('your-biteral-api-key');
+$client = new Client($apiKey, $apiVersion, $apiBaseUrl);
 
 $productPayload =
     new ProductPayload(
@@ -63,20 +45,5 @@ $productPayload =
     );
 
 $client->products()->ingest($productPayload);
-```
 
-👉 [Get a free Biteral API key](https://biteral.net) for testing your integration
-
-## Running examples
-
-There are usage example files in the `examples` directory you can use to learn how the SDK works through working examples.
-
-You can run the examples using the provided `bin/example` script, like this:
-
-```bash
-bin/example <example name>
-```
-
-To get a list of available examples, run `bin/example` without any parameters.
-
-You might need to set execution permissions for this script with `chmod +x bin/example`
+echo "Product has been ingested\n";
