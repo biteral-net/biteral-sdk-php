@@ -1,6 +1,5 @@
 {
     "name": "biteral/biteral-sdk-php",
-    "version": "0.1.0",
     "description": "Easily integrate Biteral AI tools into your e-commerce",
     "type": "library",
     "license": "MIT",
