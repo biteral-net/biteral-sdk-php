@@ -36,6 +36,7 @@ $productPayload =
         ),
         new PricePayload('49.95', 'EUR'),
         'https://m.media-amazon.com/images/I/61cELGQXXhL._AC_UL320_.jpg',
+        'https://www.amazon.es/Hitmars-Zapatillas-Deportivas-Transpirables-Sneakers/dp/B0CYGMZVL7',
         [
             'videoUrl' => "https://m.media-amazon.com/videos/C/dk14lkKlsnw._AC_UL1080_.mp4",
             'currentDiscountRate' => '50%',

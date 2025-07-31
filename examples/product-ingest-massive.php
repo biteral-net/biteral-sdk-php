@@ -41,6 +41,7 @@ foreach ($exampleProductsData as $productData) {
             null,
             new PricePayload($productData['price_amount'], $productData['price_currency']),
             $productData['image_url'],
+            null,
             null
         );
 

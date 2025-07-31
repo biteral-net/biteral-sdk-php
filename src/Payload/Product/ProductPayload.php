@@ -53,6 +53,11 @@ class ProductPayload extends Payload {
     public $imageUrl;
 
     /**
+     * @var string $url The public URL to the product page
+     */
+    public $url;
+
+    /**
      * @var bool $isActive Whether this product is active at Biteral
      */
     public $isActive;
@@ -71,6 +76,7 @@ class ProductPayload extends Payload {
         $category = null,
         $price = null,
         $imageUrl = null,
+        $url = null,
         $metadata = null,
         $isActive = null
     )
@@ -83,6 +89,7 @@ class ProductPayload extends Payload {
         $this->category = $category;
         $this->price = $price;
         $this->imageUrl = $imageUrl;
+        $this->url = $url;
         $this->metadata = $metadata;
         $this->isActive = $isActive;
     }
@@ -99,6 +106,7 @@ class ProductPayload extends Payload {
                 $transformFromObject->entityFromObject($object->category),
                 $transformFromObject->payloadFromObject(PricePayload::class, $object->price),
                 $object->imageUrl,
+                $object->url,
                 $object->metadata,
                 $object->isActive
             );
