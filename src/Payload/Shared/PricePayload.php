@@ -15,21 +15,12 @@ class PricePayload extends Payload {
      */
     public $currency;
 
-    public function __construct(
-        $amount,
-        $currency
-    )
-    {
-        $this->amount = $amount;
-        $this->currency = $currency;
-    }
-
     public static function fromObject($object, $transformFromObject)
     {
         return
-            new PricePayload(
-                $object->amount,
-                $object->currency
-            );
+            new PricePayload([
+                'amount' => $object->amount,
+                'currency' => $object->currency
+            ]);
     }
 }

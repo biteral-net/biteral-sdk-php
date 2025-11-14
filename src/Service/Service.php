@@ -92,7 +92,29 @@ abstract class Service {
             case 201:
                 return $response;
             case 400:
-                throw new BadRequestException($errorMessage);
+                $badRequestException = new BadRequestException($errorMessage);
+                if (
+                    isset($response[0])
+                    &&
+                    isset($response[0]->payload)
+                    &&
+                    isset($response[0]->payload->fieldErrors)
+                ) {
+                    $badRequestException->setFieldErrors(
+                        array_map(
+                            function ($fieldError) {
+                                return [
+                                    'field' => $fieldError->payload->field,
+                                    'code' => $fieldError->payload->code,
+                                    'description' => $fieldError->payload->description
+                                ];
+                            },
+                            $response[0]->payload->fieldErrors
+                        )
+                    );
+                    // var_dump($response[0]->payload->fieldErrors); die;
+                }
+                throw $badRequestException;
             case 401:
                 throw new UnauthorizedException($errorMessage);
             case 403:

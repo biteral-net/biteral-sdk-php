@@ -10,18 +10,11 @@ class ErrorPayload extends Payload {
      */
     public $code;
 
-    public function __construct(
-        $code
-    )
-    {
-        $this->code = $code;
-    }
-
     public static function fromObject($object, $transformFromObject)
     {
         return
-            new ErrorPayload(
-                $object->code
-            );
+            new ErrorPayload([
+                'code' => $object->code
+            ]);
     }
 }
