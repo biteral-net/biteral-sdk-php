@@ -112,7 +112,6 @@ abstract class Service {
                             $response[0]->payload->fieldErrors
                         )
                     );
-                    // var_dump($response[0]->payload->fieldErrors); die;
                 }
                 throw $badRequestException;
             case 401:
