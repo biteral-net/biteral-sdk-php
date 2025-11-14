@@ -7,6 +7,7 @@ use Biteral\Service\Product\ProductsService;
 use Biteral\Service\Customer\CustomersService;
 use Biteral\Service\NaturalSearch\NaturalSearchService;
 use Biteral\Service\Product\ProductsBatchIngestService;
+use Biteral\Service\Customer\CustomersBatchIngestService;
 
 /**
  * The main entrypoint to start using the SDK
@@ -67,6 +68,15 @@ class Client
     public function customers()
     {
         return new CustomersService($this->apiKey, $this->version, $this->baseUrl);
+    }
+
+    /**
+     * Retrieve a CustomersBatchIngestService object to ingest big amounts of customers into Biteral
+     * @return CustomersBatchIngestService
+     */
+    public function customersBatchIngest()
+    {
+        return new CustomersBatchIngestService($this->apiKey, $this->version, $this->baseUrl);
     }
 
     /**

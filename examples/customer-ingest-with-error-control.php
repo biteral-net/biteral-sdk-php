@@ -16,9 +16,9 @@ $client = new Client($apiKey, $apiVersion, $apiBaseUrl);
 $customerPayload =
     new CustomerPayload([
         'code' => 'D314K1432',
-        'country' => 'United',
-        'state' => 'Granada',
-        'city' => 'Paris',
+        'country' => 'United', // This causes an error, 'United' can refer to more than one country
+        'state' => 'Granada', // This causes an error, 'Granada' can refer to more than one state
+        'city' => 'Paris', // This causes an error: 'Paris' can refer to more than one city
         'yearBorn' => 1983,
         'gender' => CustomerGender::FEMALE,
         'metadata' => [
@@ -34,16 +34,8 @@ try {
 
 } catch (BadRequestException $e) {
 
-    echo "Errors found when ingesting\n";
-
-    if ($e->isFieldErrors()) {
-        foreach ($e->getFieldErrors() as $fieldError) {
-            echo
-                "Field: ".$fieldError['field']."\n".
-                "Code: ".$fieldError['code']."\n".
-                "Description: ".$fieldError['description']."\n".
-                "\n";
-        }
-    }
+    echo
+        "Errors found when ingesting\n".
+        $e->getFieldErrorsHumanized();
 
 }

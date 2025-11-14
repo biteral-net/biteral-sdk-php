@@ -21,4 +21,19 @@ class BadRequestException extends ApiException {
     {
         $this->fieldErrors = $fieldErrors;
     }
+
+    public function getFieldErrorsHumanized()
+    {
+        $r = '';
+        if ($this->isFieldErrors()) {
+            foreach ($this->getFieldErrors() as $fieldError) {
+                $r .=
+                    "Field: ".$fieldError['field']."\n".
+                    "Code: ".$fieldError['code']."\n".
+                    "Description: ".$fieldError['description']."\n".
+                    "\n";
+            }
+        }
+        return $r;
+    }
 }
