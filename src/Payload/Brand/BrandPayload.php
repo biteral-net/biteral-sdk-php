@@ -15,21 +15,12 @@ class BrandPayload extends Payload {
      */
     public $name;
 
-    public function __construct(
-        $code,
-        $name
-    )
-    {
-        $this->code = $code;
-        $this->name = $name;
-    }
-
     public static function fromObject($object, $transformFromObject)
     {
         return
-            new BrandPayload(
-                $object->code,
-                $object->name
-            );
+            new BrandPayload([
+                'code' => $object->code,
+                'name' => $object->name
+            ]);
     }
 }

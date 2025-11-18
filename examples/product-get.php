@@ -51,4 +51,5 @@ echo
         'price: '.$product->payload->price->amount.$product->payload->price->currency."\n"
     : '').
     ($product->payload->imageUrl ? 'imageUrl: '.$product->payload->imageUrl."\n" : '').
+    ($product->payload->url ? 'URL: '.$product->payload->url."\n" : '').
     ($product->payload->metadata ? 'metadata: '."\n".json_encode($product->payload->metadata, JSON_PRETTY_PRINT)."\n" : '');

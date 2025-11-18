@@ -53,6 +53,11 @@ class ProductPayload extends Payload {
     public $imageUrl;
 
     /**
+     * @var string $url The public URL to the product page
+     */
+    public $url;
+
+    /**
      * @var bool $isActive Whether this product is active at Biteral
      */
     public $isActive;
@@ -62,46 +67,22 @@ class ProductPayload extends Payload {
      */
     public $metadata;
 
-    public function __construct(
-        $code,
-        $title,
-        $description = null,
-        $attributes = null,
-        $brand = null,
-        $category = null,
-        $price = null,
-        $imageUrl = null,
-        $metadata = null,
-        $isActive = null
-    )
-    {
-        $this->code = $code;
-        $this->title = $title;
-        $this->description = $description;
-        $this->attributes = $attributes;
-        $this->brand = $brand;
-        $this->category = $category;
-        $this->price = $price;
-        $this->imageUrl = $imageUrl;
-        $this->metadata = $metadata;
-        $this->isActive = $isActive;
-    }
-
     public static function fromObject($object, $transformFromObject)
     {
         return
-            new ProductPayload(
-                $object->code,
-                $object->title,
-                $object->description,
-                $transformFromObject->entityFromObject($object->attributes),
-                $transformFromObject->entityFromObject($object->brand),
-                $transformFromObject->entityFromObject($object->category),
-                $transformFromObject->payloadFromObject(PricePayload::class, $object->price),
-                $object->imageUrl,
-                $object->metadata,
-                $object->isActive
-            );
+            new ProductPayload([
+                'code' => $object->code,
+                'title' => $object->title,
+                'description' => $object->description,
+                'attributes' => $transformFromObject->entityFromObject($object->attributes),
+                'brand' => $transformFromObject->entityFromObject($object->brand),
+                'category' => $transformFromObject->entityFromObject($object->category),
+                'price' => $transformFromObject->payloadFromObject(PricePayload::class, $object->price),
+                'imageUrl' => $object->imageUrl,
+                'url' => $object->url,
+                'metadata' => $object->metadata,
+                'isActive' => $object->isActive
+            ]);
     }
 
 }

@@ -13,3 +13,9 @@ function getExampleProductsData($limit = null)
     $exampleProductsData = include(__DIR__.'/../../examples/include/example_products_data.php');
     return $limit && $limit < sizeof($exampleProductsData) ? array_slice($exampleProductsData, 0, $limit) : $exampleProductsData;
 }
+
+function getExampleCustomersData($limit = null)
+{
+    $exampleCustomersData = include(__DIR__.'/../../examples/include/example_customers_data.php');
+    return $limit && $limit < sizeof($exampleCustomersData) ? array_slice($exampleCustomersData, 0, $limit) : $exampleCustomersData;
+}

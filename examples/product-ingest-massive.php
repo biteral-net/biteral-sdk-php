@@ -32,17 +32,12 @@ foreach ($exampleProductsData as $productData) {
 
     // Create a ProductPayload object for this example product
     $productPayload =
-        new ProductPayload(
-            $productData['code'],
-            $productData['title'],
-            null,
-            null,
-            null,
-            null,
-            new PricePayload($productData['price_amount'], $productData['price_currency']),
-            $productData['image_url'],
-            null
-        );
+        new ProductPayload([
+            'code' => $productData['code'],
+            'title' => $productData['title'],
+            'price' => new PricePayload(['amount' => $productData['price_amount'], 'currency' => $productData['price_currency']]),
+            'imageUrl' => $productData['image_url']
+        ]);
 
     // Send the product for batch ingestion
     $productsBatchIngestService->ingest($productPayload);

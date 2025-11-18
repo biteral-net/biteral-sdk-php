@@ -31,7 +31,7 @@ if (!$products) {
     echo "\n";
     $number = 1;
     foreach ($products as $product) {
-        echo "  #$number - ".$product->payload->title."\n\n";
+        echo "  #$number - ".$product->payload->title."\n";
         $number ++;
     }
 

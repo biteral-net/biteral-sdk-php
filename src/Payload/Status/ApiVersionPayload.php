@@ -20,24 +20,13 @@ class ApiVersionPayload extends Payload {
      */
     public $isDeprecated;
 
-    public function __construct(
-        $version,
-        $status,
-        $isDeprecated
-    )
-    {
-        $this->version = $version;
-        $this->status = $status;
-        $this->isDeprecated = $isDeprecated;
-    }
-
     public static function fromObject($object, $transformFromObject)
     {
         return
-            new ApiVersionPayload(
-                $object->version,
-                $object->status,
-                $object->isDeprecated
-            );
+            new ApiVersionPayload([
+                'version' => $object->version,
+                'status' => $object->status,
+                'isDeprecated' => $object->isDeprecated
+            ]);
     }
 }

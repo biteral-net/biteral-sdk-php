@@ -20,24 +20,13 @@ class ProductCategoryPayload extends Payload {
      */
     public $description;
 
-    public function __construct(
-        $code,
-        $title,
-        $description
-    )
-    {
-        $this->code = $code;
-        $this->title = $title;
-        $this->description = $description;
-    }
-
     public static function fromObject($object, $transformFromObject)
     {
         return
-            new ProductCategoryPayload(
-                $object->code,
-                $object->title,
-                $object->description
-            );
+            new ProductCategoryPayload([
+                'code' => $object->code,
+                'title' => $object->title,
+                'description' => $object->description
+            ]);
     }
 }

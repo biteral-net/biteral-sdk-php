@@ -15,21 +15,12 @@ class ProductAttributePayload extends Payload {
      */
     public $value;
 
-    public function __construct(
-        $title,
-        $value
-    )
-    {
-        $this->title = $title;
-        $this->value = $value;
-    }
-
     public static function fromObject($object, $transformFromObject)
     {
         return
-            new ProductAttributePayload(
-                $object->title,
-                $object->value
-            );
+            new ProductAttributePayload([
+                'title' => $object->title,
+                'value' => $object->value
+            ]);
     }
 }

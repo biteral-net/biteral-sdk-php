@@ -6,6 +6,7 @@ use Biteral\Entity\Brand\Brand;
 use Biteral\Entity\Error\Error;
 use Biteral\Entity\Status\Status;
 use Biteral\Entity\Product\Product;
+use Biteral\Entity\Customer\Customer;
 use Biteral\Entity\Status\ApiVersion;
 use Biteral\Entity\Product\ProductCategory;
 use Biteral\Entity\Product\ProductAttribute;
@@ -35,6 +36,8 @@ class TransformFromObject
                 return ProductCategory::fromObject($object, $this);
             case 'brand':
                 return Brand::fromObject($object, $this);
+            case 'customer':
+                return Customer::fromObject($object, $this);
             default:
                 return $object;
         }

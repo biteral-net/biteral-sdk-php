@@ -4,8 +4,10 @@ namespace Biteral;
 
 use Biteral\Service\Status\StatusService;
 use Biteral\Service\Product\ProductsService;
+use Biteral\Service\Customer\CustomersService;
 use Biteral\Service\NaturalSearch\NaturalSearchService;
 use Biteral\Service\Product\ProductsBatchIngestService;
+use Biteral\Service\Customer\CustomersBatchIngestService;
 
 /**
  * The main entrypoint to start using the SDK
@@ -42,7 +44,7 @@ class Client
     }
 
     /**
-     * Retrieve a StatusService object to interact with Biteral products
+     * Retrieve a ProductsService object to interact with Biteral products
      * @return ProductsService
      */
     public function products()
@@ -51,12 +53,30 @@ class Client
     }
 
     /**
-     * Retrieve a StatusService object to ingest big amounts of products into Biteral
+     * Retrieve a ProductsBatchIngestService object to ingest big amounts of products into Biteral
      * @return ProductsBatchIngestService
      */
     public function productsBatchIngest()
     {
         return new ProductsBatchIngestService($this->apiKey, $this->version, $this->baseUrl);
+    }
+
+    /**
+     * Retrieve a CustomersService object to interact with Biteral products
+     * @return CustomersService
+     */
+    public function customers()
+    {
+        return new CustomersService($this->apiKey, $this->version, $this->baseUrl);
+    }
+
+    /**
+     * Retrieve a CustomersBatchIngestService object to ingest big amounts of customers into Biteral
+     * @return CustomersBatchIngestService
+     */
+    public function customersBatchIngest()
+    {
+        return new CustomersBatchIngestService($this->apiKey, $this->version, $this->baseUrl);
     }
 
     /**
