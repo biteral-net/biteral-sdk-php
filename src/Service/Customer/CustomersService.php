@@ -23,6 +23,7 @@ final class CustomersService extends Service {
 
     /**
      * @param string $id The Biteral Id of the customer
+     * @return Customer
      * @throws ApiException
      */
     public function getById($id)

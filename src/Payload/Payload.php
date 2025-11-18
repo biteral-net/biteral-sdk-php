@@ -19,6 +19,14 @@ abstract class Payload implements PayloadInterface {
     {
         $vars = get_object_vars($this);
         unset($vars['setProperties']);
-        return array_intersect_key($vars, $this->setProperties);
+        $data = array_intersect_key($vars, $this->setProperties);
+
+        foreach ($data as $key => $value) {
+            if ($value instanceof \DateTime || $value instanceof \DateTimeImmutable) {
+                $data[$key] = $value->format('c');
+            }
+        }
+
+        return $data;
     }
 }

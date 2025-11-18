@@ -2,9 +2,11 @@
 
 namespace Biteral;
 
+use Biteral\Service\Event\EventsService;
 use Biteral\Service\Status\StatusService;
 use Biteral\Service\Product\ProductsService;
 use Biteral\Service\Customer\CustomersService;
+use Biteral\Service\Event\EventsBatchIngestService;
 use Biteral\Service\NaturalSearch\NaturalSearchService;
 use Biteral\Service\Product\ProductsBatchIngestService;
 use Biteral\Service\Customer\CustomersBatchIngestService;
@@ -77,6 +79,24 @@ class Client
     public function customersBatchIngest()
     {
         return new CustomersBatchIngestService($this->apiKey, $this->version, $this->baseUrl);
+    }
+
+    /**
+     * Retrieve an EventsService object to interact with Biteral events
+     * @return EventsService
+     */
+    public function events()
+    {
+        return new EventsService($this->apiKey, $this->version, $this->baseUrl);
+    }
+
+    /**
+     * Retrieve a EventsBatchIngestService object to ingest big amounts of events into Biteral
+     * @return EventsBatchIngestService
+     */
+    public function eventsBatchIngest()
+    {
+        return new EventsBatchIngestService($this->apiKey, $this->version, $this->baseUrl);
     }
 
     /**

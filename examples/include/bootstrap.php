@@ -7,6 +7,7 @@ $apiVersion = getenv('BITERAL_API_VERSION') !== false ? getenv('BITERAL_API_VERS
 require __DIR__.'/../../vendor/autoload.php';
 
 set_time_limit(0);
+date_default_timezone_set('UTC');
 
 function getExampleProductsData($limit = null)
 {
@@ -18,4 +19,43 @@ function getExampleCustomersData($limit = null)
 {
     $exampleCustomersData = include(__DIR__.'/../../examples/include/example_customers_data.php');
     return $limit && $limit < sizeof($exampleCustomersData) ? array_slice($exampleCustomersData, 0, $limit) : $exampleCustomersData;
+}
+
+function getExampleEventsData($limit = null)
+{
+    $eventsData = [];
+    for ($i = 0; $i < (!is_null($limit) ? $limit : 1000); $i ++) {
+        $eventsData[] = getExampleEventData();
+    }
+    return $eventsData;
+}
+
+function getExampleEventData()
+{
+    $types = [
+        'EventAddedToCart',
+        'EventRemovedFromCart',
+        'EventAddedToWishlist',
+        'EventRemovedFromWishlist',
+        'EventSale',
+        'EventReturnRequested',
+        'EventProductViewed',
+        'EventCategoryViewed',
+        'EventBrandViewed',
+        'EventSearch',
+        'EventFilterApplied',
+        'EventOrderApplied',
+        'EventCouponApplied',
+        'EventReviewWritten',
+        'EventStockAlertRequested',
+    ];
+
+    $randomOffset = mt_rand(0, 3600);
+
+    return [
+        'type' => $types[array_rand($types)],
+        'timestamp' => new DateTimeImmutable('-'.$randomOffset.' seconds'),
+        'productCode' => 'N30122',
+        'customerCode' => 'D314K1432'
+    ];
 }
