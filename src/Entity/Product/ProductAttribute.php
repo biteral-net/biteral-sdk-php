@@ -17,12 +17,12 @@ class ProductAttribute implements EntityInterface {
     public $id;
 
     /**
-     * @var int $createdAt The timestamp this product was created at Biteral at
+     * @var \DateTimeImmutable $createdAt The timestamp this product was created at Biteral at
      */
     public $createdAt;
 
     /**
-     * @var ?int $updatedAt The timestamp this product was updated for the last time at Biteral
+     * @var ?\DateTimeImmutable $updatedAt The timestamp this product was updated for the last time at Biteral
      */
     public $updatedAt;
 
@@ -46,17 +46,11 @@ class ProductAttribute implements EntityInterface {
 
     public static function fromObject($object, $transformFromObject)
     {
-        $createdAt = new DateTime($object->createdAt, new \DateTimeZone('UTC'));
-        $createdAt = $createdAt->getTimestamp();
-
-        $updatedAt = new DateTime($object->updatedAt, new \DateTimeZone('UTC'));
-        $updatedAt = $updatedAt->getTimestamp();
-
         return
             new ProductAttribute(
                 $object->id,
-                $createdAt,
-                $updatedAt,
+                new DateTime($object->createdAt, new \DateTimeZone('UTC')),
+                $object->updatedAt ? new DateTime($object->updatedAt, new \DateTimeZone('UTC')) : null,
                 $transformFromObject->payloadFromObject(ProductAttributePayload::class, $object->payload)
             );
     }

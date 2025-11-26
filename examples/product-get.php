@@ -17,16 +17,10 @@ try {
     die("Could not find product\n");
 }
 
-$createdAt = new \DateTime('@'.$product->createdAt, new \DateTimeZone('UTC'));
-
-if ($product->updatedAt) {
-    $updatedAt = new \DateTime('@'.$product->updatedAt, new \DateTimeZone('UTC'));
-}
-
 echo
     'id: '.$product->id."\n".
-    'createdAt: '.$createdAt->format('c')."\n".
-    ($updatedAt ? 'updatedAt: '.$updatedAt->format('c')."\n" : '').
+    'createdAt: '.$product->createdAt->format('c')."\n".
+    'updatedAt: '.($updatedAt ? $product->updatedAt->format('c') : '')."\n".
     'projectId: '.$product->projectId."\n".
     'code: '.$product->payload->code."\n".
     'isActive: '.($product->payload->isActive ? 'Y' : 'N')."\n".

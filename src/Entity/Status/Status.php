@@ -46,7 +46,7 @@ class Status implements EntityInterface {
     public $permissions;
 
     /**
-     * @var int $serverTime The timestamp of the server at the time of this request
+     * @var \DateTimeImmutable $serverTime The timestamp of the server at the time of this request
      */
     public $serverTime;
 
@@ -80,9 +80,6 @@ class Status implements EntityInterface {
 
     public static function fromObject($object, $transformFromObject)
     {
-        $serverTime = new DateTime($object->serverTime, new \DateTimeZone('UTC'));
-        $serverTime = $serverTime->getTimestamp();
-
         return
             new Status(
                 $transformFromObject->entityFromObject($object->availableApiVersions),
@@ -92,7 +89,7 @@ class Status implements EntityInterface {
                 $object->projectId,
                 $object->roles,
                 $object->permissions,
-                $serverTime,
+                new \DateTimeImmutable($object->serverTime, new \DateTimeZone('UTC')),
                 $object->environment
             );
     }

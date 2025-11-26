@@ -17,16 +17,10 @@ try {
     die("Could not find customer\n");
 }
 
-$createdAt = new \DateTime('@'.$customer->createdAt, new \DateTimeZone('UTC'));
-
-if ($product->updatedAt) {
-    $updatedAt = new \DateTime('@'.$customer->updatedAt, new \DateTimeZone('UTC'));
-}
-
 echo
     'id: '.$customer->id."\n".
-    'createdAt: '.$createdAt->format('c')."\n".
-    ($updatedAt ? 'updatedAt: '.$updatedAt->format('c')."\n" : '').
+    'createdAt: '.$customer->createdAt->format('c')."\n".
+    'updatedAt: '.($updatedAt ? $customer->updatedAt->format('c') : '')."\n".
     'projectId: '.$customer->projectId."\n".
     'code: '.$customer->payload->code."\n".
     'isActive: '.($customer->payload->isActive ? 'Y' : 'N')."\n".

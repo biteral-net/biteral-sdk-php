@@ -27,8 +27,6 @@ echo "clientId: ".$status->clientId."\n";
 echo "projectId: ".$status->projectId."\n";
 echo "roles: ".implode(', ', $status->roles)."\n";
 echo "permissions: ".implode(', ', $status->permissions)."\n";
-
-$serverTime = new \DateTime('@'.$status->serverTime, new \DateTimeZone('UTC'));
-echo "serverTime: ".$serverTime->format('c')."\n";
+echo "serverTime: ".$status->serverTime->format('c')."\n";
 
 echo "environment: ".$status->environment."\n";
